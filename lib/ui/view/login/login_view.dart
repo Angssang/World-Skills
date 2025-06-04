@@ -2,6 +2,8 @@ import 'package:drive_mate/ui/view/login/text_field.dart';
 import 'package:drive_mate/ui/view/register/register_view.dart';
 import 'package:flutter/material.dart';
 
+import '../select/select_view.dart';
+
 class Login extends StatefulWidget {
   final backgroundColor = Colors.black;
 
@@ -97,7 +99,7 @@ class LoginState extends State<Login> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Register()),
+                    MaterialPageRoute(builder: (context) => const Select()),
                   );
                 },
                 child: Text(
