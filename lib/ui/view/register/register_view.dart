@@ -1,5 +1,4 @@
 import 'dart:io' show File;
-
 import 'package:drive_mate/ui/view/login/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -118,17 +117,20 @@ class RegisterState extends State<Register> {
                                   if (_image != null) {
                                     return ElevatedButton(
                                       style: ButtonStyle(
-                                        backgroundColor: WidgetStateProperty.all(Colors.white),
+                                        backgroundColor:
+                                            WidgetStateProperty.all(
+                                              Colors.white,
+                                            ),
                                         shape: WidgetStateProperty.all(
                                           RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.zero
-                                          )
-                                        )
+                                            borderRadius: BorderRadius.zero,
+                                          ),
+                                        ),
                                       ),
                                       onPressed: () {
                                         upModal(context);
                                       },
-                                      child: Image.file(File(_image!.path))
+                                      child: Image.file(File(_image!.path)),
                                     );
                                   }
 

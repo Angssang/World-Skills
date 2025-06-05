@@ -1,15 +1,24 @@
 import 'dart:io';
 
+import 'package:drive_mate/ui/view/car_info/car_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../home/home_view.dart';
+import '../tab_view.dart';
 import '../login/text_field.dart';
 
 class Select extends StatefulWidget {
+
+ Select({super.key});
+
   final backgroundColor = Colors.black;
 
-  const Select({super.key});
+  final List<CarInfo> carInfo = [
+    CarInfo(Image(image: AssetImage('assets/images/a8.png')), 'AUDI A8'),
+    CarInfo(Image(image: AssetImage('assets/images/i8.png')), 'BMW I8'),
+    CarInfo(Image(image: AssetImage('assets/images/gv70.png')), 'GV70'),
+    CarInfo(Image(image: AssetImage('assets/images/q7.png')), 'Q7'),
+  ];
 
   @override
   State<StatefulWidget> createState() => SelectState();
@@ -18,7 +27,10 @@ class Select extends StatefulWidget {
 class SelectState extends State<Select> {
   bool isChecked = false;
   final ImagePicker _imagePicker = ImagePicker();
+  final PageController _pageController = PageController();
+  int pageIndex = 0;
   XFile? _image;
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +75,15 @@ class SelectState extends State<Select> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (pageIndex<=0) {
+                      return;
+                    }
+                    setState(() {
+                      pageIndex -=1;
+                    });
+                    _pageController.animateToPage(pageIndex, duration: const Duration(milliseconds: 500), curve: Curves.bounceIn);
+                  },
                   icon: Icon(
                     Icons.arrow_back_ios,
                     size: 30,
@@ -71,12 +91,42 @@ class SelectState extends State<Select> {
                   ),
                 ),
                 SizedBox(
-                  width: 300,
-                  height: 170,
-                  child: Image(image: AssetImage('assets/images/a8.png')),
+                  width: 200,
+                  height: 200,
+                  child:
+                  PageView.builder(
+                    controller: _pageController,
+                    itemCount: widget.carInfo.length,
+                    onPageChanged: (value) {
+                      if(value>=widget.carInfo.length || value <=0){
+                        return;
+                      }else {
+
+                        setState(() {
+                          pageIndex = value;
+                        });
+                      }
+                    },
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          SizedBox(
+                              width: 300,
+                              height: 170,
+                              child:  widget.carInfo[pageIndex].carPic
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if(pageIndex >= widget.carInfo.length - 1) {return;}
+                    setState(() {
+                      pageIndex += 1;
+                    });
+                  },
                   icon: Icon(
                     Icons.arrow_forward_ios,
                     size: 30,
@@ -86,7 +136,7 @@ class SelectState extends State<Select> {
               ],
             ),
             Text(
-              'AUDI A8',
+              widget.carInfo[pageIndex].carNm,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 27,
@@ -123,7 +173,7 @@ class SelectState extends State<Select> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=> Home()),
+                  MaterialPageRoute(builder: (context)=> TabView()),
                 );
               },
               child: Text(

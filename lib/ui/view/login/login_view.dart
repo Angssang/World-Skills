@@ -99,7 +99,7 @@ class LoginState extends State<Login> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Select()),
+                    MaterialPageRoute(builder: (context) => Select()),
                   );
                 },
                 child: Text(
@@ -163,15 +163,15 @@ class LoginState extends State<Login> {
                     context: context,
                     builder:
                         (context) => AlertDialog(
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text('이건 진짜 안됩니다'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('이건 진짜 안됩니다'),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
                   );
                 },
                 child: Text(
